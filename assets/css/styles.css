@@ -1,0 +1,611 @@
+/*=================  GOOGLE FONTS ================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+/*=================  VARIABLE CSS ================== */
+:root{
+    /*==========  Colors ========= */
+    --hue-color: 240; /* Blue 240 - Green 154 - Orange 25 - */
+
+    --first-color: hsl(var(--hue-color),53%, 49%);
+    --title-color: hsl(var(--hue-color),53%, 15%);;
+    --text-color:  hsl(var(--hue-color),12%, 35%);;
+    --text-color-light: hsl(var(--hue-color),12%, 65%);;
+    --white-color: #FFF;
+    --body-color: hsl(var(--hue-color),24%, 94%);;
+
+    /*=========== Fonts and typography =========== */
+    --body-font: 'Poppins', sans-serif;
+    --biggest-font-size: 3rem;
+    --small-font-size: .813rem;
+    --smaller-font-size: .75rem;
+    --tiny-font-size: .625rem;
+
+    /*============ Font weight ============= */
+    --font-medium: 500;
+
+    /*============= Margens Bottom ============== */
+    --mb-0-25: .25rem;
+    --mb-1: 1rem;
+    --mb-1-5: 1.5rem;
+    --mb-2-5: 2.5rem;
+
+    /*============= z index ============== */
+    --z-normal: 1;
+    --z-tooltrip: 10;
+}
+
+@media screen and (min-width: 968px){
+    :root{
+        --biggest-font-size: 3.5rem;
+        --small-font-size: .875rem;
+        --smaller-font-size: .813rem;
+        --tiny-font-size: .75rem;
+    }
+}
+
+/*=================  VARIABLE Dark theme ================== */
+body.dark-theme{
+    --title-color: hsl(var(--hue-color), 12%, 95%);
+    --text-color:  hsl(var(--hue-color), 12%, 75%);
+    --body-color: hsl(var(--hue-color), 10%, 16%);
+}
+
+/*=================  Button Dark/Light ================== */
+.clock__theme{
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    display: flex;
+    padding: .25rem;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+                inset 1px 1px 1px hsla(var(--hue-color),30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
+
+}
+
+
+/*=================  Box shadow Dark theme ================== */
+.dark-theme .clock__circle{
+    box-shadow:6px 6px 16px hsla(var(--hue-color), 8%, 12%, 1),
+            -6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1), 
+            inset -6px -6px 16px hsla(var(--hue-color), 8%, 20%, 1), 
+            inset 6px 6px 12px hsla(var(--hue-color), 8%, 12%, 1);
+}
+
+.dark-theme .clock__theme{
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 8%, 20%, 1),
+                inset 1px 1px 1px hsla(var(--hue-color), 8%, 12%, 1);
+}
+
+/*=================  BASE ================== */
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+    font-family: var(--body-font);
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
+a{
+    text-decoration: none;
+}
+
+/*=================  REUSABLE CSS CLASSES ================== */
+.container{
+    max-width: 968px;
+    margin-left: var(--mb-1);
+    margin-right: var(--mb-1);
+}
+
+.grid{
+    display: grid;
+}
+
+/*=================  Clock ================== */
+.clock__container{
+    height: 100vh;
+    grid-template-rows: 1fr max-content;
+}
+
+.clock__circle{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    box-shadow: -6px -6px 16px var(--white-color),
+                 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1), 
+                 inset 6px 6px 16px hsla(var(--hue-color), 30%, 86%, 1),
+                inset -6px -6px 16px var(--white-color);
+    border-radius: 50%;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.clock__content{
+    align-self: center;
+    row-gap: 3.5rem;
+}
+
+.clock__twelve,
+.clock__three,
+.clock__six,
+.clock__nine{
+    position: absolute;
+    width: 1rem;
+    height: 1px;
+    background-color: var(--text-color-light);
+}
+
+.clock__twelve,
+.clock__six{
+    transform: translateX(-50%) rotate(90deg);
+}
+
+.clock__twelve{
+    top: 1.25rem;
+    left: 50%;
+}
+
+.clock__three{
+    top: 50%;
+    right: .75rem;
+}
+
+.clock__six{
+    bottom: 1.25rem;
+    left: 50%;
+}
+
+.clock__nine{
+    top:50%;
+    left: .75rem;
+}
+
+.clock__rounder{
+    width: .75rem;
+    height: .75rem;
+    background-color: var(--first-color);
+    border-radius: 50%;
+    border: 2px solid var(--body-color);
+    z-index: var(--z-tooltrip);
+}
+
+.clock__hour,
+.clock__minutes,
+.clock__seconds{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+.clock__hour{
+    width: 105px;
+    height: 105px;
+}
+
+.clock__hour::before{
+    content: '';
+    position: absolute;
+    background-color: var(--text-color);
+    width: .25rem;
+    height: 3rem;
+    border-radius: .75rem;
+    z-index: var(--z-normal);
+}
+
+.clock__minutes{
+    width: 136px;
+    height: 136px;
+}
+
+.clock__minutes::before{
+    content: '';
+    position: absolute;
+    background-color: var(--text-color);
+    width: .25rem;
+    height: 4rem;
+    border-radius: .75rem;
+    z-index: var(--z-normal);
+}
+
+.clock__seconds{
+    width: 130px;
+    height: 130px;
+}
+
+.clock__seconds::before{
+    content: '';
+    position: absolute;
+    background-color: var(--first-color);
+    width: .125rem;
+    height: 5rem;
+    border-radius: .75rem;
+    z-index: var(--z-normal);
+}
+
+.clock__logo{
+    width: max-content;
+    justify-self: center;
+    margin-bottom: var(--mb-2-5);
+    font-size: var(--smaller-font-size);
+    font-weight: var(--font-medium);
+    color: var(--text-color-light);
+    transition: .3s;
+}
+.clock__logo:hover{
+    color: var(--first-color);
+}
+
+.clock__text{
+    display: flex;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+.clock__text-hour,
+.clock__text-minutes{
+    font-size: var(--biggest-font-size);
+    font-weight: var(--font-medium);
+    color: var(--title-color);
+}
+
+.clock__text-amp{
+    font-size: var(--tiny-font-size);
+    color: var(--title-color);
+    font-weight: var(--font-medium);
+    margin-left: var(--mb-0-25);
+}
+
+.clock__date{
+    text-align: center;
+    font-size: var(--small-font-size);
+    font-weight: var(--font-medium);
+}
+
+.clock__alarm{
+    text-align: center;
+    font-size: var(--small-font-size);
+    font-weight: var(--font-medium);
+    
+}
+.clock__alarm-btn{
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+                inset 1px 1px 1px hsla(var(--hue-color),30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
+}
+
+/*==================== features ====================*/
+.section {
+    padding: 2rem 0 4rem;
+    align-items: center;
+    text-align: center;
+}
+
+
+.features__container{
+    row-gap:0;
+}
+  
+.features__header{
+    align-items: center;
+    /* margin-bottom: var(--mb-2-5); */
+    padding: 1.5rem;
+    cursor:pointer;
+}
+  
+.features__icon,
+.features__arrow{
+font-size: 2rem;
+color: var(--first-color);
+}
+
+.features__icon{
+margin-right: var(--mb-0-25);
+}
+
+.skill__title{
+    font-size: var(--h3-font-size);
+    text-align: center;
+}
+
+.features__subtitle{
+    font-size: var(--small-font-size);
+    color: var(--text-color-light);
+    text-align: center;
+}
+
+.features__arrow{
+margin-left: auto;
+transition: .4s;
+}
+
+.features__list{
+row-gap:1.5rem ;
+}
+
+
+.features__titles{
+display: flex;
+text-align: center;
+margin-bottom: var(--mb-0-5);
+}
+
+.features__name{
+font-size: var(--normal-font-size);
+font-weight: var(--font-medium);
+}
+
+
+.features__close .features__list{
+height: 0;
+overflow: hidden;
+}
+
+.features__open .features__list{
+height: max-content;
+margin-bottom: var(--mb-2-25);
+}
+
+.features__open .features__arrow{
+transform: rotate(-180deg);
+}
+.button{
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+                inset 1px 1px 1px hsla(var(--hue-color),30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
+}
+.button.set-alarm:hover{
+    background-color: #7400c2;
+}
+.select__button{
+    position: flex;
+    text-align: center;
+    padding: 0;
+    border-radius: 15px;
+    width: 70%;
+    height: 50px;
+    box-shadow: inset -1px -1px 1px hsla(var(--hue-color), 0%, 100%, 1),
+                inset 1px 1px 1px hsla(var(--hue-color),30%, 86%, 1);
+    color: var(--first-color);
+    cursor: pointer;
+}
+input{
+    width: 100%;
+    padding: 10px;
+    color: var(--first-color);
+    font-size: 1rem;
+
+}
+/*=================  Timer ================== */
+.watch{
+    text-align: center;
+    width: 100%;
+    max-width: 360px;
+    /* background-color: var(--title-color); */
+    border-radius: 1rem;
+    margin: 4rem auto;
+    
+}
+.time{
+    left: 1rem;
+    font-size: 5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+
+button:hover{
+    opacity: 0.7;
+}
+button:active{
+    background-color: var(--first-color);
+}
+/*=================  Timer ================== */
+.col{
+    width: 1000px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.col div{
+    width: 250px;
+    text-align: center;
+}
+
+.cd_input{
+    display: block;
+    height: 150px;
+    width: 60%;
+    border-radius: 2rem;
+    text-align: center;
+    font-size: 8rem;
+}
+
+
+/*=================  MEDIA QUERIES ================== */
+/* For Large Devices */
+@media screen and (min-width: 968px){
+    .container{
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+    .clock__logo{
+        margin-bottom: 3rem;
+
+    }
+}
+
+.glow-on-hover {
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+/* ... your existing CSS code ... */
+
+/* Media Query for Small Devices (Smartphones) */
+@media screen and (max-width: 600px) {
+    .clock__circle {
+      width: 150px;
+      height: 150px;
+    }
+  
+    .clock__hour,
+    .clock__minutes,
+    .clock__seconds {
+      width: 75px;
+      height: 75px;
+    }
+  
+    .clock__text-hour,
+    .clock__text-minutes {
+      font-size: 2rem;
+    }
+  
+    .clock__text-amp {
+      font-size: 0.75rem;
+    }
+  
+    .clock__date {
+      font-size: 0.75rem;
+    }
+  
+    .button {
+      width: 80px;
+      height: 30px;
+      font-size: 0.75rem;
+    }
+  
+    .select__button {
+      width: 70%;
+      height: 40px;
+    }
+  }
+  
+  /* Media Query for Medium Devices (Tablets) */
+  @media screen and (min-width: 601px) and (max-width: 968px) {
+    .clock__container {
+      grid-template-columns: 1fr;
+    }
+  
+    .clock__content {
+      text-align: center;
+    }
+  
+    .clock__circle {
+      width: 150px;
+      height: 150px;
+    }
+  
+    .clock__hour,
+    .clock__minutes,
+    .clock__seconds {
+      width: 75px;
+      height: 75px;
+    }
+  
+    .clock__text-hour,
+    .clock__text-minutes {
+      font-size: 2rem;
+    }
+  
+    .clock__text-amp {
+      font-size: 0.75rem;
+    }
+  
+    .clock__date {
+      font-size: 0.75rem;
+    }
+  
+    .button {
+      width: 80px;
+      height: 30px;
+      font-size: 0.75rem;
+    }
+  
+    .select__button {
+      width: 70%;
+      height: 40px;
+    }
+  
+    .features__header {
+      font-size: 1.5rem;
+    }
+  }
+  
+ /* countdown  */
+
+  
